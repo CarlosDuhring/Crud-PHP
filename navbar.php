@@ -1,18 +1,24 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$logado = isset($_SESSION['usuario_id']);
 ?>
+<header class="topbar">
+    <a class="brand" href="index.php">
+        <span class="brand__mark">&gt;_</span>
+        <span class="brand__text">opinião<span class="brand__dot">.</span></span>
+    </a>
 
-<header>
-    <nav>
-        <a href="index.php">inicio</a>
-        <a href="opnioes.php">Ver opniões</a>
+    <nav class="nav">
+        <a href="index.php">Início</a>
+        <a href="opnioes.php">Opiniões</a>
         <a href="sobre.php">Sobre</a>
-        <a href="conta.php">Conta</a>
+        <?php if ($logado): ?>
+            <a href="conta.php">Minha conta</a>
+            <a class="nav__out" href="logout.php">Sair</a>
+        <?php else: ?>
+            <a class="nav__cta" href="login.php">Entrar</a>
+        <?php endif; ?>
     </nav>
 </header>
-
-<?php if (isset($_SESSION["usuario_id"])): ?>
-    <a href="logout.php">Sair</a>
-<?php else: ?>
-    <a href="login.php">Login</a>
-<?php endif; ?>
